@@ -1,0 +1,17 @@
+name: Gitleaks Scan
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  gitleaks-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: Run Gitleaks
+        run: gitleaks detect --source . --exit-code 1 || (echo "Se han detectado fugas" && exit 1)
